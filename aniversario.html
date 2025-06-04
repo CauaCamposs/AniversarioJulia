@@ -7,15 +7,16 @@
   <style>
     body {
       font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(to right, #ffe0ec, #f0c4ff);
-      color: #4a004a;
+      background-color: #000;
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       text-align: center;
       padding: 20px;
+      position: relative;
       overflow: hidden;
     }
 
@@ -52,68 +53,74 @@
     #contador {
       font-size: 1.3em;
       margin-top: 10px;
-      color: #660066;
+      color: #ffb3f3;
     }
 
-    /* Balões */
-    .balloon {
+    .slideshow-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .slideshow-background img {
       position: absolute;
-      bottom: -100px;
-      font-size: 2em;
-      animation: float 10s infinite ease-in;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      filter: brightness(40%);
     }
 
-    @keyframes float {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-      10% { opacity: 1; }
-      100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+    .slideshow-background img.active {
+      opacity: 1;
     }
 
-    /* Emojis flutuantes */
-    .emoji-float {
-      position: absolute;
-      bottom: -50px;
-      font-size: 2rem;
-      animation: emojiSubindo 8s linear infinite;
-      pointer-events: none;
-      opacity: 0.8;
+    .insta-publicacao {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
 
-    @keyframes emojiSubindo {
-      0% { transform: translateY(0) scale(1); opacity: 0; }
-      20% { opacity: 1; }
-      100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+    .insta-publicacao img {
+      width: 300px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     }
   </style>
 </head>
 <body>
-  <!-- Música de fundo -->
   <audio autoplay loop>
     <source src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3" type="audio/mp3">
     Seu navegador não suporta áudio.
   </audio>
 
-  <!-- Conteúdo principal -->
+  <div class="slideshow-background">
+    <img src="foto 3.jpg" class="active">
+    <img src="foto 5.jpg">
+    <img src="foto 6.jpg">
+    <img src="foto 7.jpg">
+    <img src="foto 8.jpg">
+    <img src="foto 9.jpg">
+    <img src="foto 10.jpg">
+  </div>
+
   <div class="cake">🎂</div>
   <h1 id="titulo">Carregando...</h1>
   <p id="mensagem"></p>
   <p id="contador"></p>
   <button id="shareBtn">Compartilhar no WhatsApp</button>
 
-  <!-- Balões animados -->
-  <script>
-    const emojisBalões = ["🎈", "🎉", "🎊"];
-    for (let i = 0; i < 20; i++) {
-      const b = document.createElement("div");
-      b.className = "balloon";
-      b.style.left = Math.random() * 100 + "vw";
-      b.style.animationDuration = 8 + Math.random() * 4 + "s";
-      b.textContent = emojisBalões[Math.floor(Math.random() * emojisBalões.length)];
-      document.body.appendChild(b);
-    }
-  </script>
+  <div class="insta-publicacao">
+    <img src="foto 1.jpg" alt="Publicação 1">
+    <img src="foto 2.jpg" alt="Publicação 2">
+  </div>
 
-  <!-- Script principal -->
   <script>
     const titulo = document.getElementById("titulo");
     const mensagem = document.getElementById("mensagem");
@@ -121,13 +128,11 @@
 
     function atualizarMensagem() {
       const hoje = new Date();
-      const nascimento = new Date(2010, 5, 9); // 09/06/2010
-      const aniversarioEsteAno = new Date(hoje.getFullYear(), 5, 9, 0, 0, 0);
+      const nascimento = new Date(2010, 5, 9);
+      const aniversarioEsteAno = new Date(hoje.getFullYear(), 5, 9);
       let idade = hoje.getFullYear() - nascimento.getFullYear();
 
-      if (hoje < aniversarioEsteAno) {
-        idade--;
-      }
+      if (hoje < aniversarioEsteAno) idade--;
 
       if (hoje.getDate() === 9 && hoje.getMonth() === 5) {
         titulo.textContent = `🎉 Feliz ${idade} anos!`;
@@ -143,8 +148,7 @@
 
     function iniciarContador() {
       const agora = new Date();
-      const aniversario = new Date(2025, 5, 9, 0, 0, 0); // 09/06/2025
-
+      const aniversario = new Date(2025, 5, 9);
       const diff = aniversario - agora;
 
       if (diff > 0) {
@@ -152,39 +156,30 @@
         const horas = Math.floor(diff / (1000 * 60 * 60)) % 24;
         const minutos = Math.floor(diff / (1000 * 60)) % 60;
         const segundos = Math.floor(diff / 1000) % 60;
-
-        contador.textContent = `⏳ Faltam ${dias} dia(s), `
-          + `${horas.toString().padStart(2, '0')}h `
-          + `${minutos.toString().padStart(2, '0')}min `
-          + `${segundos.toString().padStart(2, '0')}s para seu aniversário! 🎉`;
+        contador.textContent = `⏳ Faltam ${dias} dia(s), ${horas.toString().padStart(2,'0')}h ${minutos.toString().padStart(2,'0')}min ${segundos.toString().padStart(2,'0')}s para seu aniversário! 🎉`;
       } else {
         contador.textContent = "🎂 Hoje é o grande dia! Feliz Aniversário!";
       }
-
       atualizarMensagem();
     }
 
     setInterval(iniciarContador, 1000);
     iniciarContador();
 
-    // Compartilhar no WhatsApp
     document.getElementById("shareBtn").onclick = () => {
       const texto = `${titulo.textContent}\n${mensagem.textContent}\n🎂 Acesse essa surpresa:`;
       const url = window.location.href;
       window.open(`https://wa.me/?text=${encodeURIComponent(texto + "\n" + url)}`);
     };
 
-    // Emojis flutuantes animados
-    const emojisFlutuantes = ["🎈", "🎉", "🎂", "💖", "✨", "🎊"];
+    const slides = document.querySelectorAll(".slideshow-background img");
+    let slideAtual = 0;
+
     setInterval(() => {
-      const emoji = document.createElement("div");
-      emoji.className = "emoji-float";
-      emoji.style.left = Math.random() * 100 + "vw";
-      emoji.style.animationDuration = (6 + Math.random() * 4) + "s";
-      emoji.textContent = emojisFlutuantes[Math.floor(Math.random() * emojisFlutuantes.length)];
-      document.body.appendChild(emoji);
-      setTimeout(() => emoji.remove(), 10000);
-    }, 500);
+      slides[slideAtual].classList.remove("active");
+      slideAtual = (slideAtual + 1) % slides.length;
+      slides[slideAtual].classList.add("active");
+    }, 3000);
   </script>
 </body>
 </html>
