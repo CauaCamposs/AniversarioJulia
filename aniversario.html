@@ -23,7 +23,7 @@
       text-align: center;
       padding: 20px;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     h1 {
@@ -76,8 +76,8 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       opacity: 0;
       transition: opacity 1s ease-in-out;
@@ -93,12 +93,38 @@
       display: flex;
       flex-direction: column;
       gap: 15px;
+      z-index: 1;
     }
 
     .insta-publicacao img {
       width: 300px;
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    .carrossel-container {
+      margin-top: 40px;
+      width: 100%;
+      overflow-x: auto;
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      scroll-snap-type: x mandatory;
+    }
+
+    .carrossel-container img {
+      flex: 0 0 auto;
+      width: 200px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 10px;
+      scroll-snap-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+    }
+
+    .carrossel-container img:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
@@ -109,13 +135,13 @@
   </audio>
 
   <div class="slideshow-background">
-    <img src="foto 3.jpg" class="active">
-    <img src="foto 5.jpg">
-    <img src="foto 6.jpg">
-    <img src="foto 7.jpg">
-    <img src="foto 8.jpg">
-    <img src="foto 9.jpg">
-    <img src="foto 10.jpg">
+    <img src="imagens/foto3.jpg" class="active">
+    <img src="imagens/foto5.jpg">
+    <img src="imagens/foto6.jpg">
+    <img src="imagens/foto7.jpg">
+    <img src="imagens/foto8.jpg">
+    <img src="imagens/foto9.jpg">
+    <img src="imagens/foto10.jpg">
   </div>
 
   <div class="cake">🎂</div>
@@ -125,8 +151,18 @@
   <button id="shareBtn">Compartilhar no WhatsApp</button>
 
   <div class="insta-publicacao">
-    <img src="foto 1.jpg" alt="Publicação 1">
-    <img src="foto 2.jpg" alt="Publicação 2">
+    <img src="imagens/foto1.jpg" alt="Publicação 1">
+    <img src="imagens/foto2.jpg" alt="Publicação 2">
+  </div>
+
+  <div class="carrossel-container">
+    <img src="imagens/foto3.jpg" alt="Foto 3">
+    <img src="imagens/foto5.jpg" alt="Foto 5">
+    <img src="imagens/foto6.jpg" alt="Foto 6">
+    <img src="imagens/foto7.jpg" alt="Foto 7">
+    <img src="imagens/foto8.jpg" alt="Foto 8">
+    <img src="imagens/foto9.jpg" alt="Foto 9">
+    <img src="imagens/foto10.jpg" alt="Foto 10">
   </div>
 
   <script>
